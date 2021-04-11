@@ -3,10 +3,7 @@ package net.openhft.hashing;
 import java.nio.ByteOrder;
 
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 
-import static java.nio.ByteOrder.BIG_ENDIAN;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
 import static net.openhft.hashing.UnsafeAccess.BYTE_BASE;
 
@@ -74,7 +71,6 @@ import static net.openhft.hashing.UnsafeAccess.BYTE_BASE;
  *
  * Notes: This access is based on the UnsafeAccess, so only works for the native order.
  */
-@ParametersAreNonnullByDefault
 class CompactLatin1CharSequenceAccess extends Access<byte[]> {
     @NotNull
     static final Access<byte[]> INSTANCE = new CompactLatin1CharSequenceAccess();

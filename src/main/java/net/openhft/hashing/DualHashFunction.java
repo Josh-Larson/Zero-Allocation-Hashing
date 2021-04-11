@@ -2,11 +2,9 @@ package net.openhft.hashing;
 
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.NotNull;
-import javax.annotation.ParametersAreNonnullByDefault;
 
 // An internal helper class for casting LongTupleHashFunction as LongHashFunction
 
-@ParametersAreNonnullByDefault
 abstract class DualHashFunction extends LongTupleHashFunction {
     private static final long serialVersionUID = 0L;
 
@@ -62,14 +60,14 @@ abstract class DualHashFunction extends LongTupleHashFunction {
         dualHashVoid(result);
     }
 
-    protected abstract <T> long dualHash(@Nullable T input, Access<T> access, long off, long len, @Nullable long[] result);
+    protected abstract <T> long dualHash(@Nullable T input, @NotNull Access<T> access, long off, long len, @Nullable long[] result);
     @Override
-    public <T> void hash(@Nullable final T input, final Access<T> access, final long off, final long len, final long[] result) {
+    public <T> void hash(@Nullable final T input, final @NotNull Access<T> access, final long off, final long len, final long[] result) {
         checkResult(result);
         dualHash(input, access, off, len, result);
     }
     @Override
-    public <T> long[] hash(@Nullable final T input, final Access<T> access, final long off, final long len) {
+    public <T> long[] hash(@Nullable final T input, final @NotNull Access<T> access, final long off, final long len) {
         final long[] result = newResultArray();
         dualHash(input, access, off, len, result);
         return result;

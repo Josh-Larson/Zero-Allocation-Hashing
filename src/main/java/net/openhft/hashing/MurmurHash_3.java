@@ -18,11 +18,8 @@ package net.openhft.hashing;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 
-import static java.lang.Long.reverseBytes;
 import static java.nio.ByteOrder.LITTLE_ENDIAN;
-import static net.openhft.hashing.Util.NATIVE_LITTLE_ENDIAN;
 import static net.openhft.hashing.Primitives.unsignedInt;
 import static net.openhft.hashing.Primitives.unsignedShort;
 
@@ -30,12 +27,11 @@ import static net.openhft.hashing.Primitives.unsignedShort;
  * Derived from https://github.com/google/guava/blob/fa95e381e665d8ee9639543b99ed38020c8de5ef
  * /guava/src/com/google/common/hash/Murmur3_128HashFunction.java
  */
-@ParametersAreNonnullByDefault
 class MurmurHash_3 {
     private static final long C1 = 0x87c37b91114253d5L;
     private static final long C2 = 0x4cf5ad432745937fL;
 
-    private static <T> long hash(long seed, @Nullable T input, Access<T> access, long offset, long length, @Nullable long[] result) {
+    private static <T> long hash(long seed, @Nullable T input, @NotNull Access<T> access, long offset, long length, @Nullable long[] result) {
         long h1 = seed;
         long h2 = seed;
         long remaining = length;
@@ -284,7 +280,7 @@ class MurmurHash_3 {
         }
 
         @Override
-        public <T> long dualHash(@Nullable T input, Access<T> access, long off, long len, @Nullable long[] result) {
+        public <T> long dualHash(@Nullable T input, @NotNull Access<T> access, long off, long len, @Nullable long[] result) {
             long seed = seed();
             return MurmurHash_3.hash(seed, input, access.byteOrder(input, LITTLE_ENDIAN), off, len, result);
         }

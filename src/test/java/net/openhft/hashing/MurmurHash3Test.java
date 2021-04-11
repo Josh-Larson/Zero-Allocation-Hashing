@@ -22,7 +22,6 @@ import com.google.common.hash.Hashing;
 import org.junit.Test;
 
 import java.util.Arrays;
-import java.util.Random;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 

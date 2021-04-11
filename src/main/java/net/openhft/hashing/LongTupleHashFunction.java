@@ -2,7 +2,6 @@ package net.openhft.hashing;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 import sun.nio.ch.DirectBuffer;
 
 import java.io.Serializable;
@@ -56,7 +55,6 @@ import static net.openhft.hashing.Util.*;
  *
  * @see LongHashFunction LongHashFunction
  */
-@ParametersAreNonnullByDefault
 public abstract class LongTupleHashFunction implements Serializable {
     private static final long serialVersionUID = 0L;
 
@@ -316,7 +314,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @throws NullPointerException if {@code result == null}
      * @throws IllegalArgumentException if {@code result.length < newResultArray().length}
      */
-    public abstract <T> void hash(@Nullable T input, Access<T> access,
+    public abstract <T> void hash(@Nullable T input, @NotNull Access<T> access,
                                   long off, long len, long[] result);
 
     /**
@@ -325,7 +323,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @see #hash(Object, Access, long, long, long[])
      */
     @NotNull
-    public <T> long[] hash(@Nullable final T input, final Access<T> access,
+    public <T> long[] hash(@Nullable final T input, final @NotNull Access<T> access,
                            final long off, final long len) {
         final long[] result = newResultArray();
         hash(input, access, off, len, result);
@@ -478,7 +476,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * Shortcut for {@link #hashBytes(ByteBuffer, int, int, long[])
      * hashBytes(input, input.position(), input.remaining(), result)}.
      */
-    public void hashBytes(final ByteBuffer input, final long[] result) {
+    public void hashBytes(final @NotNull ByteBuffer input, final long[] result) {
         hashByteBuffer(this, input, input.position(), input.remaining(), result);
     }
 
@@ -488,7 +486,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @see #hashBytes(ByteBuffer, long[])
      */
     @NotNull
-    public long[] hashBytes(final ByteBuffer input) {
+    public long[] hashBytes(final @NotNull ByteBuffer input) {
         final long[] result = newResultArray();
         hashByteBuffer(this, input, input.position(), input.remaining(), result);
         return result;
@@ -519,7 +517,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @throws IllegalArgumentException if {@code off < 0} or {@code off + len > input.length}
      *                                  or {@code len < 0}
      */
-    public void hashBytes(final ByteBuffer input,
+    public void hashBytes(final @NotNull ByteBuffer input,
                           final int off, final int len, final long[] result) {
         checkArrayOffs(input.capacity(), off, len);
         hashByteBuffer(this, input, off, len, result);
@@ -531,7 +529,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @see #hashBytes(ByteBuffer, int, int, long[])
      */
     @NotNull
-    public long[] hashBytes(final ByteBuffer input, final int off, final int len) {
+    public long[] hashBytes(final @NotNull ByteBuffer input, final int off, final int len) {
         checkArrayOffs(input.capacity(), off, len);
         final long[] result = newResultArray();
         hashByteBuffer(this, input, off, len, result);
@@ -639,7 +637,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * Shortcut for
      * {@link #hashChars(String, int, int, long[]) hashChars(input, 0, input.length(), result)}.
      */
-    public void hashChars(final String input, final long[] result) {
+    public void hashChars(final @NotNull String input, final long[] result) {
         VALID_STRING_HASH.hash(input, this, 0, input.length(), result);
     }
 
@@ -649,7 +647,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @see #hashChars(String, long[])
      */
     @NotNull
-    public long[] hashChars(final String input) {
+    public long[] hashChars(final @NotNull String input) {
         final long[] result = newResultArray();
         VALID_STRING_HASH.hash(input, this, 0, input.length(), result);
         return result;
@@ -679,7 +677,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @throws IllegalArgumentException if {@code off < 0} or {@code off + len > input.length}
      *                                  or {@code len < 0}
      */
-    public void hashChars(final String input, final int off, final int len, final long[] result) {
+    public void hashChars(final @NotNull String input, final int off, final int len, final long[] result) {
         checkArrayOffs(input.length(), off, len);
         VALID_STRING_HASH.hash(input, this, off, len, result);
     }
@@ -711,7 +709,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @see #hashChars(CharSequence, long[])
      */
     @NotNull
-    public <T extends CharSequence> long[] hashChars(final T input) {
+    public <T extends CharSequence> long[] hashChars(final @NotNull T input) {
         final long[] result = newResultArray();
         hashNativeChars(this, input, 0, input.length(), result);
         return result;
@@ -740,7 +738,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @throws IllegalArgumentException if {@code off < 0} or {@code off + len > input.length}
      *                                  or {@code len < 0}
      */
-    public <T extends CharSequence> void hashChars(final T input, final int off, final int len,
+    public <T extends CharSequence> void hashChars(final @NotNull T input, final int off, final int len,
                                                    final long[] result) {
         checkArrayOffs(input.length(), off, len);
         hashNativeChars(this, input, off, len, result);
@@ -752,7 +750,7 @@ public abstract class LongTupleHashFunction implements Serializable {
      * @see #hashChars(CharSequence, int, int, long[])
      */
     @NotNull
-    public <T extends CharSequence> long[] hashChars(final T input, final int off, final int len) {
+    public <T extends CharSequence> long[] hashChars(final @NotNull T input, final int off, final int len) {
         checkArrayOffs(input.length(), off, len);
         final long[] result = newResultArray();
         hashNativeChars(this, input, off, len, result);
@@ -951,12 +949,12 @@ public abstract class LongTupleHashFunction implements Serializable {
     @NotNull
     private static final Access<ByteBuffer> BYTE_BUF_ACCESS = ByteBufferAccess.INSTANCE;
 
-    private static void unsafeHash(final LongTupleHashFunction f, @Nullable final Object input,
+    private static void unsafeHash(final @NotNull LongTupleHashFunction f, @Nullable final Object input,
                                    final long off, final long len, final long[] result) {
         f.hash(input, OBJECT_ACCESS, off, len, result);
     }
 
-    private static void hashByteBuffer(final LongTupleHashFunction f, final ByteBuffer input,
+    private static void hashByteBuffer(final @NotNull LongTupleHashFunction f, final @NotNull ByteBuffer input,
                                        final int off, final int len, final long[] result) {
         if (input.hasArray()) {
             unsafeHash(f, input.array(), BYTE_BASE + input.arrayOffset() + off, len, result);
@@ -967,7 +965,7 @@ public abstract class LongTupleHashFunction implements Serializable {
         }
     }
 
-    static void hashNativeChars(final LongTupleHashFunction f, final CharSequence input,
+    static void hashNativeChars(final @NotNull LongTupleHashFunction f, final @NotNull CharSequence input,
                                 final int off, final int len, final long[] result) {
         f.hash(input, CHAR_SEQ_ACCESS, off * 2L, len * 2L, result);
     }

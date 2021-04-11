@@ -1,11 +1,10 @@
 package net.openhft.hashing;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.lang.reflect.Field;
-import javax.annotation.ParametersAreNonnullByDefault;
-import static net.openhft.hashing.UnsafeAccess.*;
 import static net.openhft.hashing.Util.*;
 
-@ParametersAreNonnullByDefault
 enum ModernCompactStringHash implements StringHash {
     INSTANCE;
 
@@ -27,8 +26,8 @@ enum ModernCompactStringHash implements StringHash {
     }
 
     @Override
-    public long longHash(final String s, final LongHashFunction hashFunction,
-                    final int off, final int len) {
+    public long longHash(final @NotNull String s, final @NotNull LongHashFunction hashFunction,
+                         final int off, final int len) {
         final int sl = s.length();
         if (len <= 0 || sl <= 0) {
             checkArrayOffs(sl, off, len); // check as chars
@@ -46,7 +45,7 @@ enum ModernCompactStringHash implements StringHash {
     }
 
     @Override
-    public void hash(final String s, final LongTupleHashFunction hashFunction,
+    public void hash(final @NotNull String s, final @NotNull LongTupleHashFunction hashFunction,
                     final int off, final int len, final long[] result) {
         final int sl = s.length();
         if (len <= 0 || sl <= 0) {

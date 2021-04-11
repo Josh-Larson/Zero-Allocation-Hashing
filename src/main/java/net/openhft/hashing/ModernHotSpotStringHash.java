@@ -16,10 +16,10 @@
 
 package net.openhft.hashing;
 
-import java.lang.reflect.Field;
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jetbrains.annotations.NotNull;
 
-@ParametersAreNonnullByDefault
+import java.lang.reflect.Field;
+
 enum ModernHotSpotStringHash implements StringHash {
     INSTANCE;
 
@@ -35,14 +35,14 @@ enum ModernHotSpotStringHash implements StringHash {
     }
 
     @Override
-    public long longHash(String s, LongHashFunction hashFunction, int off, int len) {
+    public long longHash(@NotNull String s, @NotNull LongHashFunction hashFunction, int off, int len) {
         char[] value = (char[]) UnsafeAccess.UNSAFE.getObject(s, valueOffset);
         return hashFunction.hashChars(value, off, len);
     }
 
     @Override
-    public void hash(final String s, final LongTupleHashFunction hashFunction,
-                    final int off, final int len, final long[] result) {
+    public void hash(final @NotNull String s, final @NotNull LongTupleHashFunction hashFunction,
+                     final int off, final int len, final long[] result) {
         final char[] value = (char[]) UnsafeAccess.UNSAFE.getObject(s, valueOffset);
         hashFunction.hashChars(value, off, len, result);
     }

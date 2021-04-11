@@ -16,10 +16,9 @@
 
 package net.openhft.hashing;
 
-import javax.annotation.ParametersAreNonnullByDefault;
+import org.jetbrains.annotations.NotNull;
 
-@ParametersAreNonnullByDefault
 interface StringHash {
-    long longHash(String s, LongHashFunction hashFunction, int off, int len);
-    void hash(String s, LongTupleHashFunction hashFunction, int off, int len, long[] result);
+    long longHash(@NotNull String s, @NotNull LongHashFunction hashFunction, int off, int len);
+    void hash(@NotNull String s, @NotNull LongTupleHashFunction hashFunction, int off, int len, long[] result);
 }

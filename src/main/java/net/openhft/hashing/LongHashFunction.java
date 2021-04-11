@@ -23,7 +23,6 @@ import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
-import static java.nio.ByteOrder.nativeOrder;
 import static net.openhft.hashing.CharSequenceAccess.nativeCharSequenceAccess;
 import static net.openhft.hashing.UnsafeAccess.*;
 import static net.openhft.hashing.Util.*;
