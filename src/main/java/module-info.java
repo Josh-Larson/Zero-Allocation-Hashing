@@ -1,4 +1,4 @@
-module net.openhft.hashing.zero_allocation_hashing {
+module net.openhft.hashing {
 	requires org.jetbrains.annotations;
 	requires jdk.unsupported;
 	

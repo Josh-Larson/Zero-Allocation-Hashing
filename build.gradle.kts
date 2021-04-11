@@ -37,6 +37,10 @@ version = "0.15-SNAPSHOT"
 description = "Zero-allocation Hashing"
 java.sourceCompatibility = JavaVersion.VERSION_1_9
 
+tasks.compileJava {
+    options.compilerArgs = listOf("--add-exports", "java.base/sun.nio.ch=net.openhft.hashing")
+}
+
 java {
     withSourcesJar()
     withJavadocJar()
